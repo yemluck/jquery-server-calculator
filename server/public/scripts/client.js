@@ -21,23 +21,27 @@ function sendInstruction(event){
     let calculatorData = {
         number1: $('#num1').val(),
         operation: operation,
-        number2: $('#num2').val()
+        number2: $('#num2').val(),
+        result: ''
     } // end data
 
     // use AJAX to send data to server to add to database
     $.ajax({
         method: 'POST',
-        url: '/',
-        data: calculatorData
+        url: '/calculator',
+        data: calculatorData // turn to req.body on server
     })
         .then((response) => {
             console.log('POST response', response);
-            console.log('POST calculatorData', calculatorData)
         })
-
-    $('#num1').val('')
-    $('#num2').val('')
-
+        .catch((err) => {
+            console.log('Post failed');
+            alert('Something went wrong. Try again later')
+        }) // failure on server.js
+    $('#num1').val('');
+    $('#num2').val('');
+    $('#num1').focus();
+    refresh()
 } // end function sendInstruction
 
 
@@ -46,23 +50,23 @@ function refresh(){
     // this function renders response from server kinda
     $.ajax({
         method: 'GET',
-        url: '/'
+        url: '/calculator'
     })
         .then((response) => {
-           // console.log('AJAX request complete', response);
+           console.log('AJAX request complete in GET', response);
             // need a function to render response
-            //render(response)
+            render(response)
         })
 
 } // end function refresh
 
 
 
-/*
-function render(outputToSend){
+
+function render(calculatorInput){
     // Do some jQuery to render data sent from server to DOM
-    $('#result).empty();
-    $('#result).append(`<h2>result or whatever</h2>)
+    $('#result').empty();
+    for(let item of calculatorInput)
+    $('#result').append(`<ul><li>${item.number1}</li></ul>`)
 
 }// end function render
-*/
