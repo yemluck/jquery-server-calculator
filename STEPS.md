@@ -22,7 +22,9 @@
 ## client.js
 
 [x] Create object to gather input
-[ ] AJAX POST
-[ ] AJAX GET
-[ ] Response render
-[ ] Refresh function
+[x] AJAX POST
+[x] AJAX GET
+[x] Response render
+[x] Refresh function
+[ ] Display historical data
+[ ] stretch
