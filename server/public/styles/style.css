@@ -1,4 +1,10 @@
 h1 {
     background: black;
-    color: white
+    color: white;
+    text-align: center;
+}
+
+body {
+    background: grey;
+    margin: 30px 100px 30px
 }
