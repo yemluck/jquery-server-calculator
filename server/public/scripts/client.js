@@ -21,8 +21,7 @@ function sendInstruction(event){
     let calculatorData = {
         number1: $('#num1').val(),
         operation: operation,
-        number2: $('#num2').val(),
-        result: ''
+        number2: $('#num2').val()
     } // end data
 
     // use AJAX to send data to server to add to database
@@ -63,10 +62,10 @@ function refresh(){
 
 
 
-function render(calculatorInput){
+function render(calcResult){
     // Do some jQuery to render data sent from server to DOM
     $('#result').empty();
-    for(let item of calculatorInput)
-    $('#result').append(`<ul><li>${item.number1}</li></ul>`)
+    //for(let item of calcResult)
+    $('#result').append(`<h2> Answer: ${calcResult.result}</h2>`)
 
 }// end function render
