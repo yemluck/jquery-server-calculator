@@ -4,7 +4,7 @@ const app = express();
 // listen on port 5000
 const port = 5000;
 // start up our server
-app.listen (port, () => {
+app.listen(port, () => {
     console.log('Server ready to listen on port', port)
 });
 
@@ -12,7 +12,7 @@ app.listen (port, () => {
 app.use(express.static('server/public'));
 
 // Do not forget your bodyParser
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
@@ -21,31 +21,29 @@ app.use(bodyParser.json());
 // Global array to hold all of our data
 
 let calculatorInput = [];
-let calculatorOutput = [];
 let calcResult = '';
 
 // POST / endpoint
-app.post('/calculator', (req,res) => {
-    console.log('in POST /', req.body);
+app.post('/calculator', (req, res) => {
+    console.log('in POST line 28/', req.body);
     // Add data from client to the global array
     calculation(req.body);
+    req.body.result = calcResult
     calculatorInput.push(req.body);
+    //calculatorInput.result = calcResult
     // Send back a 👍
     res.sendStatus(201);
-    console.log('this is calculator input',calculatorInput)
-    console.log(typeof calculatorInput[0].operation )
-    console.log(typeof calculatorInput[0].number1)
-    console.log(typeof calculatorInput[0].number2)
-    console.log(calculatorInput[0].operation)
+    console.log('this is calculator input line 35', calculatorInput)
+    console.log('this is calculator input result line 36', calculatorInput[calculatorInput.length - 1].result)
 })
 
-function calculation(object){
-    console.log('in calculation')
-    if (object.operation === "+"){
+function calculation(object) {
+    //console.log('in calculation')
+    if (object.operation === "+") {
         calcResult = Number(object.number1) + Number(object.number2)
-    } else if (object.operation === "-"){
+    } else if (object.operation === "-") {
         calcResult = Number(object.number1) - Number(object.number2)
-    } else if (object.operation === "*"){
+    } else if (object.operation === "*") {
         calcResult = Number(object.number1) * Number(object.number2)
     } else if (object.operation === "/") {
         calcResult = Number(object.number1) / Number(object.number2)
@@ -55,10 +53,9 @@ function calculation(object){
 // GET / endpoint
 // localhost:5000/
 app.get('/calculator', (req, res) => {
-    console.log('in GET /', calculatorInput)
-    res.send({result: calcResult})
+    console.log('in GET  line 55/', calculatorInput[calculatorInput.length - 1].result)
+    res.send(calculatorInput)
 })
 
 // function to do calculations for app.get which
 // sends data back to the client side
-

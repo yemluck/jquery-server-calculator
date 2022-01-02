@@ -1,20 +1,21 @@
-$(document).ready( onReady );
+$(document).ready(onReady);
 
-function onReady(){
-    
+function onReady() {
+
     console.log('jQuery loaded');
     $('.operation').on('click', getOperator)
     $('#inputData').on('submit', sendInstruction)
-    refresh()
+    $('#clearBtn').on('click', clearInputs)
+    //refresh()
 };
 
-function getOperator(evt){
+function getOperator(evt) {
     evt.preventDefault()
     operation = $(this).data('math');
-return operation
+    return operation
 } // end function operator
 
-function sendInstruction(event){
+function sendInstruction(event) {
     event.preventDefault();
 
     // Collect data input
@@ -44,7 +45,7 @@ function sendInstruction(event){
 } // end function sendInstruction
 
 
-function refresh(){
+function refresh() {
     // this function contains AJAX get
     // this function renders response from server kinda
     $.ajax({
@@ -52,7 +53,8 @@ function refresh(){
         url: '/calculator'
     })
         .then((response) => {
-           console.log('AJAX request complete in GET', response);
+            console.log('AJAX request complete in GET', response);
+            console.log('is result in response', response[response.length - 1].result)
             // need a function to render response
             render(response)
         })
@@ -62,10 +64,32 @@ function refresh(){
 
 
 
-function render(calcResult){
+function render(arg) {
     // Do some jQuery to render data sent from server to DOM
     $('#result').empty();
-    //for(let item of calcResult)
-    $('#result').append(`<h2> Answer: ${calcResult.result}</h2>`)
+    $('#history').empty();
+
+
+    //for(let calculation of abc)
+     $('#result').append(`
+     <h2> Answer: ${arg[arg.length -1].result}</h2>
+    `)
+    
+    // add history
+    for(let history of arg){
+        $('#history').append(`
+        <ul>
+            <li>${history.number1} ${history.operation}
+        ${history.number2}</li>
+        </ul>
+        
+        `)
+    }
+  
 
 }// end function render
+
+function clearInputs(){
+    $('#result').empty();
+    $('#history').empty()
+}
