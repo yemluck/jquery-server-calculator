@@ -91,5 +91,6 @@ function render(arg) {
 
 function clearInputs(){
     $('#result').empty();
-    $('#history').empty()
+    $('#history').empty();
+    calculatorData = {};
 }
