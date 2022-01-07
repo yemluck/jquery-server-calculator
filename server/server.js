@@ -53,7 +53,8 @@ function calculation(object) {
 // GET / endpoint
 // localhost:5000/
 app.get('/calculator', (req, res) => {
-    console.log('in GET  line 55/', calculatorInput[calculatorInput.length - 1].result)
+    console.log('this is calculatorInput', calculatorInput)
+   // console.log('in GET  line 55/', calculatorInput[calculatorInput.length - 1].result);
     res.send(calculatorInput)
 })
 

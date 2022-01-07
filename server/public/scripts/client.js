@@ -6,7 +6,7 @@ function onReady() {
     $('.operation').on('click', getOperator)
     $('#inputData').on('submit', sendInstruction)
     $('#clearBtn').on('click', clearInputs)
-    //refresh()
+    refresh()
 };
 
 function getOperator(evt) {
@@ -22,7 +22,8 @@ function sendInstruction(event) {
     let calculatorData = {
         number1: $('#num1').val(),
         operation: operation,
-        number2: $('#num2').val()
+        number2: $('#num2').val(),
+        result: '0'
     } // end data
 
     // use AJAX to send data to server to add to database
@@ -54,7 +55,7 @@ function refresh() {
     })
         .then((response) => {
             console.log('AJAX request complete in GET', response);
-            console.log('is result in response', response[response.length - 1].result)
+            //console.log('is result in response', response[response.length - 1].result)
             // need a function to render response
             render(response)
         })
@@ -63,19 +64,17 @@ function refresh() {
 
 
 
-
 function render(arg) {
     // Do some jQuery to render data sent from server to DOM
     $('#result').empty();
     $('#history').empty();
 
-
-    //for(let calculation of abc)
-     $('#result').append(`
-     <h2> Answer: ${arg[arg.length -1].result}</h2>
+    if(arg.length >= 1){
+        $('#result').append(`
+     <h2> Answer: ${arg[arg.length - 1].result}</h2>
     `)
-    
-    // add history
+    }
+    //for(let calculation of abc)
     for(let history of arg){
         $('#history').append(`
         <ul>
@@ -84,10 +83,14 @@ function render(arg) {
         </ul>
         
         `)
-    }
-  
+    } // end for loop
+   
+
+
+
 
 }// end function render
+
 
 function clearInputs(){
     $('#result').empty();
